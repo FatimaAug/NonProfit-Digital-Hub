@@ -264,7 +264,7 @@ export default function Dashboard() {
           <CardContent>
             <ol className="space-y-4">
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                <span className="shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
                   1
                 </span>
                 <div>
@@ -277,7 +277,7 @@ export default function Dashboard() {
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center font-bold text-sm">
+                <span className="shrink-0 w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center font-bold text-sm">
                   2
                 </span>
                 <div>
@@ -290,7 +290,7 @@ export default function Dashboard() {
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-sm">
+                <span className="shrink-0 w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center font-bold text-sm">
                   3
                 </span>
                 <div>
@@ -303,7 +303,7 @@ export default function Dashboard() {
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                <span className="shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
                   4
                 </span>
                 <div>
@@ -317,7 +317,7 @@ export default function Dashboard() {
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center font-bold text-sm">
+                <span className="shrink-0 w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center font-bold text-sm">
                   5
                 </span>
                 <div>
