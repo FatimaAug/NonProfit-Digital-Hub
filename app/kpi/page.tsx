@@ -1,11 +1,17 @@
-'use client';
+"use client";
 
-import { useApp } from '@/lib/context';
-import { KPIEntry } from '@/lib/types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Download, Plus, Trash2 } from 'lucide-react';
+import { useApp } from "@/lib/context";
+import { KPIEntry } from "@/lib/types";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Download, Plus, Trash2 } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -18,16 +24,15 @@ import {
   Tooltip,
   Legend,
   ComposedChart,
-} from 'recharts';
-import { useState } from 'react';
-import html2pdf from 'html2pdf.js';
-import { useRef } from 'react';
+} from "recharts";
+import { useState } from "react";
+import { useRef } from "react";
 
 export default function KPIDashboardPage() {
   const { state, updateState } = useApp();
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState<Partial<KPIEntry>>({
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split("T")[0],
     followers: undefined,
     postReach: undefined,
     engagement: undefined,
@@ -55,12 +60,14 @@ export default function KPIDashboardPage() {
     updateState({
       kpi: {
         ...state.kpi,
-        entries: [...state.kpi.entries, newEntry].sort((a, b) => a.date.localeCompare(b.date)),
+        entries: [...state.kpi.entries, newEntry].sort((a, b) =>
+          a.date.localeCompare(b.date),
+        ),
       },
     });
 
     setFormData({
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split("T")[0],
       followers: undefined,
       postReach: undefined,
       engagement: undefined,
@@ -81,22 +88,27 @@ export default function KPIDashboardPage() {
     });
   };
 
-  const handleDownloadReport = () => {
+  const handleDownloadReport = async () => {
     if (!reportRef.current) return;
+
+    const html2pdf = (await import("html2pdf.js")).default;
 
     const opt = {
       margin: 10,
-      filename: `kpi-report-${new Date().toISOString().split('T')[0]}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
+      filename: `kpi-report-${new Date().toISOString().split("T")[0]}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' },
+      jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
     };
 
     html2pdf().set(opt).from(reportRef.current).save();
   };
 
   const chartData = state.kpi.entries.map((entry) => ({
-    date: new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    date: new Date(entry.date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    }),
     followers: entry.followers || 0,
     postReach: entry.postReach || 0,
     engagement: entry.engagement || 0,
@@ -115,9 +127,9 @@ export default function KPIDashboardPage() {
   };
 
   const getChangeColor = (change: number) => {
-    if (change > 0) return 'text-green-600';
-    if (change < 0) return 'text-red-600';
-    return 'text-muted-foreground';
+    if (change > 0) return "text-green-600";
+    if (change < 0) return "text-red-600";
+    return "text-muted-foreground";
   };
 
   return (
@@ -140,7 +152,11 @@ export default function KPIDashboardPage() {
               Add KPI Entry
             </Button>
           )}
-          <Button onClick={handleDownloadReport} variant="outline" className="gap-2">
+          <Button
+            onClick={handleDownloadReport}
+            variant="outline"
+            className="gap-2"
+          >
             <Download size={18} />
             Download Report
           </Button>
@@ -157,85 +173,117 @@ export default function KPIDashboardPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-foreground">Date</label>
+                <label className="text-sm font-medium text-foreground">
+                  Date
+                </label>
                 <Input
                   type="date"
-                  value={formData.date || ''}
-                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  value={formData.date || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, date: e.target.value })
+                  }
                   className="mt-1"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-foreground">Followers</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Followers
+                  </label>
                   <Input
                     type="number"
-                    value={formData.followers || ''}
+                    value={formData.followers || ""}
                     onChange={(e) =>
-                      setFormData({ ...formData, followers: parseInt(e.target.value) || undefined })
+                      setFormData({
+                        ...formData,
+                        followers: parseInt(e.target.value) || undefined,
+                      })
                     }
                     placeholder="Total followers"
                     className="mt-1"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground">Post Reach</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Post Reach
+                  </label>
                   <Input
                     type="number"
-                    value={formData.postReach || ''}
+                    value={formData.postReach || ""}
                     onChange={(e) =>
-                      setFormData({ ...formData, postReach: parseInt(e.target.value) || undefined })
+                      setFormData({
+                        ...formData,
+                        postReach: parseInt(e.target.value) || undefined,
+                      })
                     }
                     placeholder="People reached"
                     className="mt-1"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground">Engagement</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Engagement
+                  </label>
                   <Input
                     type="number"
-                    value={formData.engagement || ''}
+                    value={formData.engagement || ""}
                     onChange={(e) =>
-                      setFormData({ ...formData, engagement: parseInt(e.target.value) || undefined })
+                      setFormData({
+                        ...formData,
+                        engagement: parseInt(e.target.value) || undefined,
+                      })
                     }
                     placeholder="Likes + comments + shares"
                     className="mt-1"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground">Email Open Rate (%)</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Email Open Rate (%)
+                  </label>
                   <Input
                     type="number"
-                    value={formData.emailOpenRate || ''}
+                    value={formData.emailOpenRate || ""}
                     onChange={(e) =>
-                      setFormData({ ...formData, emailOpenRate: parseInt(e.target.value) || undefined })
+                      setFormData({
+                        ...formData,
+                        emailOpenRate: parseInt(e.target.value) || undefined,
+                      })
                     }
                     placeholder="0-100"
                     className="mt-1"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground">Website Visits</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Website Visits
+                  </label>
                   <Input
                     type="number"
-                    value={formData.websiteVisits || ''}
+                    value={formData.websiteVisits || ""}
                     onChange={(e) =>
-                      setFormData({ ...formData, websiteVisits: parseInt(e.target.value) || undefined })
+                      setFormData({
+                        ...formData,
+                        websiteVisits: parseInt(e.target.value) || undefined,
+                      })
                     }
                     placeholder="Number of visits"
                     className="mt-1"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground">Donations Received ($)</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Donations Received ($)
+                  </label>
                   <Input
                     type="number"
-                    value={formData.donationsReceived || ''}
+                    value={formData.donationsReceived || ""}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        donationsReceived: parseInt(e.target.value) || undefined,
+                        donationsReceived:
+                          parseInt(e.target.value) || undefined,
                       })
                     }
                     placeholder="Amount in dollars"
@@ -243,10 +291,12 @@ export default function KPIDashboardPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground">Volunteer Signups</label>
+                  <label className="text-sm font-medium text-foreground">
+                    Volunteer Signups
+                  </label>
                   <Input
                     type="number"
-                    value={formData.volunteerSignups || ''}
+                    value={formData.volunteerSignups || ""}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
@@ -265,7 +315,7 @@ export default function KPIDashboardPage() {
                   onClick={() => {
                     setShowForm(false);
                     setFormData({
-                      date: new Date().toISOString().split('T')[0],
+                      date: new Date().toISOString().split("T")[0],
                       followers: undefined,
                       postReach: undefined,
                       engagement: undefined,
@@ -295,15 +345,29 @@ export default function KPIDashboardPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-3xl font-bold text-primary">{latestEntry.followers}</p>
+                  <p className="text-3xl font-bold text-primary">
+                    {latestEntry.followers}
+                  </p>
                   {previousEntry?.followers !== undefined && (
                     <p
                       className={`text-sm font-medium mt-1 ${getChangeColor(
-                        getChange(latestEntry.followers, previousEntry.followers)
+                        getChange(
+                          latestEntry.followers,
+                          previousEntry.followers,
+                        ),
                       )}`}
                     >
-                      {getChange(latestEntry.followers, previousEntry.followers) > 0 ? '+' : ''}
-                      {getChange(latestEntry.followers, previousEntry.followers)}%
+                      {getChange(
+                        latestEntry.followers,
+                        previousEntry.followers,
+                      ) > 0
+                        ? "+"
+                        : ""}
+                      {getChange(
+                        latestEntry.followers,
+                        previousEntry.followers,
+                      )}
+                      %
                     </p>
                   )}
                 </CardContent>
@@ -317,15 +381,29 @@ export default function KPIDashboardPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-3xl font-bold text-secondary">{latestEntry.engagement}</p>
+                  <p className="text-3xl font-bold text-secondary">
+                    {latestEntry.engagement}
+                  </p>
                   {previousEntry?.engagement !== undefined && (
                     <p
                       className={`text-sm font-medium mt-1 ${getChangeColor(
-                        getChange(latestEntry.engagement, previousEntry.engagement)
+                        getChange(
+                          latestEntry.engagement,
+                          previousEntry.engagement,
+                        ),
                       )}`}
                     >
-                      {getChange(latestEntry.engagement, previousEntry.engagement) > 0 ? '+' : ''}
-                      {getChange(latestEntry.engagement, previousEntry.engagement)}%
+                      {getChange(
+                        latestEntry.engagement,
+                        previousEntry.engagement,
+                      ) > 0
+                        ? "+"
+                        : ""}
+                      {getChange(
+                        latestEntry.engagement,
+                        previousEntry.engagement,
+                      )}
+                      %
                     </p>
                   )}
                 </CardContent>
@@ -347,17 +425,19 @@ export default function KPIDashboardPage() {
                       className={`text-sm font-medium mt-1 ${getChangeColor(
                         getChange(
                           latestEntry.donationsReceived,
-                          previousEntry.donationsReceived
-                        )
+                          previousEntry.donationsReceived,
+                        ),
                       )}`}
                     >
-                      {getChange(latestEntry.donationsReceived, previousEntry.donationsReceived) >
-                      0
-                        ? '+'
-                        : ''}
                       {getChange(
                         latestEntry.donationsReceived,
-                        previousEntry.donationsReceived
+                        previousEntry.donationsReceived,
+                      ) > 0
+                        ? "+"
+                        : ""}
+                      {getChange(
+                        latestEntry.donationsReceived,
+                        previousEntry.donationsReceived,
                       )}
                       %
                     </p>
@@ -373,23 +453,27 @@ export default function KPIDashboardPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-3xl font-bold text-accent">{latestEntry.volunteerSignups}</p>
+                  <p className="text-3xl font-bold text-accent">
+                    {latestEntry.volunteerSignups}
+                  </p>
                   {previousEntry?.volunteerSignups !== undefined && (
                     <p
                       className={`text-sm font-medium mt-1 ${getChangeColor(
                         getChange(
                           latestEntry.volunteerSignups,
-                          previousEntry.volunteerSignups
-                        )
+                          previousEntry.volunteerSignups,
+                        ),
                       )}`}
                     >
-                      {getChange(latestEntry.volunteerSignups, previousEntry.volunteerSignups) >
-                      0
-                        ? '+'
-                        : ''}
                       {getChange(
                         latestEntry.volunteerSignups,
-                        previousEntry.volunteerSignups
+                        previousEntry.volunteerSignups,
+                      ) > 0
+                        ? "+"
+                        : ""}
+                      {getChange(
+                        latestEntry.volunteerSignups,
+                        previousEntry.volunteerSignups,
                       )}
                       %
                     </p>
@@ -442,7 +526,9 @@ export default function KPIDashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Engagement & Impact</CardTitle>
-                <CardDescription>Engagement, donations, and volunteer signups</CardDescription>
+                <CardDescription>
+                  Engagement, donations, and volunteer signups
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
@@ -453,13 +539,25 @@ export default function KPIDashboardPage() {
                     <Tooltip />
                     <Legend />
                     {latestEntry?.engagement !== undefined && (
-                      <Bar dataKey="engagement" fill="#d87e4a" name="Engagement" />
+                      <Bar
+                        dataKey="engagement"
+                        fill="#d87e4a"
+                        name="Engagement"
+                      />
                     )}
                     {latestEntry?.donationsReceived !== undefined && (
-                      <Bar dataKey="donationsReceived" fill="#16a34a" name="Donations ($)" />
+                      <Bar
+                        dataKey="donationsReceived"
+                        fill="#16a34a"
+                        name="Donations ($)"
+                      />
                     )}
                     {latestEntry?.volunteerSignups !== undefined && (
-                      <Bar dataKey="volunteerSignups" fill="#d97706" name="Volunteers" />
+                      <Bar
+                        dataKey="volunteerSignups"
+                        fill="#d97706"
+                        name="Volunteers"
+                      />
                     )}
                   </BarChart>
                 </ResponsiveContainer>
@@ -502,15 +600,22 @@ export default function KPIDashboardPage() {
                   </thead>
                   <tbody>
                     {state.kpi.entries.map((entry) => (
-                      <tr key={entry.date} className="border-b border-border hover:bg-muted/50">
+                      <tr
+                        key={entry.date}
+                        className="border-b border-border hover:bg-muted/50"
+                      >
                         <td className="py-3 px-4">{entry.date}</td>
-                        <td className="py-3 px-4">{entry.followers || '-'}</td>
-                        <td className="py-3 px-4">{entry.postReach || '-'}</td>
-                        <td className="py-3 px-4">{entry.engagement || '-'}</td>
+                        <td className="py-3 px-4">{entry.followers || "-"}</td>
+                        <td className="py-3 px-4">{entry.postReach || "-"}</td>
+                        <td className="py-3 px-4">{entry.engagement || "-"}</td>
                         <td className="py-3 px-4">
-                          {entry.donationsReceived ? `$${entry.donationsReceived}` : '-'}
+                          {entry.donationsReceived
+                            ? `$${entry.donationsReceived}`
+                            : "-"}
                         </td>
-                        <td className="py-3 px-4">{entry.volunteerSignups || '-'}</td>
+                        <td className="py-3 px-4">
+                          {entry.volunteerSignups || "-"}
+                        </td>
                         <td className="py-3 px-4">
                           <button
                             onClick={() => handleDeleteEntry(entry.date)}
@@ -530,41 +635,65 @@ export default function KPIDashboardPage() {
 
         {/* Hidden Report */}
         <div ref={reportRef} className="hidden">
-          <div style={{ padding: '20px', fontSize: '12px' }}>
-            <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>
+          <div style={{ padding: "20px", fontSize: "12px" }}>
+            <h1
+              style={{
+                fontSize: "24px",
+                fontWeight: "bold",
+                marginBottom: "20px",
+              }}
+            >
               KPI Report
             </h1>
-            <p style={{ marginBottom: '20px' }}>
-              Generated: {new Date().toLocaleDateString()} | Organization:{' '}
+            <p style={{ marginBottom: "20px" }}>
+              Generated: {new Date().toLocaleDateString()} | Organization:{" "}
               {state.organization.name}
             </p>
 
             {latestEntry && (
-              <div style={{ marginBottom: '30px' }}>
-                <h2 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>
+              <div style={{ marginBottom: "30px" }}>
+                <h2
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    marginBottom: "10px",
+                  }}
+                >
                   Latest Metrics
                 </h2>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <tr>
-                    <td style={{ padding: '5px', borderBottom: '1px solid #ccc' }}>
-                      Followers: {latestEntry.followers || 'N/A'}
+                    <td
+                      style={{ padding: "5px", borderBottom: "1px solid #ccc" }}
+                    >
+                      Followers: {latestEntry.followers || "N/A"}
                     </td>
-                    <td style={{ padding: '5px', borderBottom: '1px solid #ccc' }}>
-                      Reach: {latestEntry.postReach || 'N/A'}
+                    <td
+                      style={{ padding: "5px", borderBottom: "1px solid #ccc" }}
+                    >
+                      Reach: {latestEntry.postReach || "N/A"}
                     </td>
-                    <td style={{ padding: '5px', borderBottom: '1px solid #ccc' }}>
-                      Engagement: {latestEntry.engagement || 'N/A'}
+                    <td
+                      style={{ padding: "5px", borderBottom: "1px solid #ccc" }}
+                    >
+                      Engagement: {latestEntry.engagement || "N/A"}
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '5px', borderBottom: '1px solid #ccc' }}>
-                      Donations: ${latestEntry.donationsReceived || 'N/A'}
+                    <td
+                      style={{ padding: "5px", borderBottom: "1px solid #ccc" }}
+                    >
+                      Donations: ${latestEntry.donationsReceived || "N/A"}
                     </td>
-                    <td style={{ padding: '5px', borderBottom: '1px solid #ccc' }}>
-                      Volunteers: {latestEntry.volunteerSignups || 'N/A'}
+                    <td
+                      style={{ padding: "5px", borderBottom: "1px solid #ccc" }}
+                    >
+                      Volunteers: {latestEntry.volunteerSignups || "N/A"}
                     </td>
-                    <td style={{ padding: '5px', borderBottom: '1px solid #ccc' }}>
-                      Email Open Rate: {latestEntry.emailOpenRate || 'N/A'}%
+                    <td
+                      style={{ padding: "5px", borderBottom: "1px solid #ccc" }}
+                    >
+                      Email Open Rate: {latestEntry.emailOpenRate || "N/A"}%
                     </td>
                   </tr>
                 </table>
