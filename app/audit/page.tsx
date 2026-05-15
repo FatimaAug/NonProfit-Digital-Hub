@@ -10,14 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Circle, AlertCircle, Download } from "lucide-react";
+import { CheckCircle2, Circle, AlertCircle } from "lucide-react";
 import { useState } from "react";
-import { useRef } from "react";
 
 export default function AuditPage() {
   const { state, updateState } = useApp();
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
-  const reportRef = useRef<HTMLDivElement>(null);
 
   const auditScore = calculateAuditScore(state.audit);
   const gaps = getAuditGaps(state.audit);
@@ -32,22 +30,6 @@ export default function AuditPage() {
     updateState({
       audit: { ...state.audit, items: updatedItems },
     });
-  };
-
-  const handleDownloadReport = async () => {
-    if (!reportRef.current) return;
-
-    const html2pdf = (await import("html2pdf.js")).default;
-    const element = reportRef.current;
-    const opt = {
-      margin: 10,
-      filename: `audit-report-${new Date().toISOString().split("T")[0]}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
-    };
-
-    html2pdf().set(opt).from(element).save();
   };
 
   const groupedItems = state.audit.items.reduce(
@@ -150,13 +132,7 @@ export default function AuditPage() {
           </Card>
         </div>
 
-        {/* Download Report */}
-        <div className="flex justify-end">
-          <Button onClick={handleDownloadReport} className="gap-2">
-            <Download size={18} />
-            Download Report
-          </Button>
-        </div>
+        {/* Download Report removed */}
 
         {/* Audit Items by Category */}
         <div className="space-y-4">
@@ -270,99 +246,7 @@ export default function AuditPage() {
           ))}
         </div>
 
-        {/* Hidden report for PDF */}
-        <div ref={reportRef} className="hidden">
-          <div style={{ padding: "20px", fontSize: "12px" }}>
-            <h1
-              style={{
-                fontSize: "24px",
-                fontWeight: "bold",
-                marginBottom: "20px",
-              }}
-            >
-              Digital Communication Audit Report
-            </h1>
-            <p style={{ marginBottom: "20px" }}>
-              Generated: {new Date().toLocaleDateString()} | Organization:{" "}
-              {state.organization.name}
-            </p>
-
-            <div style={{ marginBottom: "30px", pageBreakInside: "avoid" }}>
-              <h2
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  marginBottom: "10px",
-                }}
-              >
-                Audit Score Summary
-              </h2>
-              <p>
-                Overall Score: <strong>{auditScore}%</strong>
-              </p>
-              <p>
-                Items Completed:{" "}
-                <strong>
-                  {state.audit.items.filter((i) => i.status === "yes").length}/
-                  {state.audit.items.length}
-                </strong>
-              </p>
-              <p>Gap Areas: {gaps.length}</p>
-            </div>
-
-            {Object.entries(groupedItems).map(([category, items]) => (
-              <div
-                key={category}
-                style={{ marginBottom: "20px", pageBreakInside: "avoid" }}
-              >
-                <h3
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    marginBottom: "10px",
-                  }}
-                >
-                  {category}
-                </h3>
-                <ul style={{ marginLeft: "20px" }}>
-                  {items.map((item) => (
-                    <li key={item.id} style={{ marginBottom: "5px" }}>
-                      {item.question} -{" "}
-                      <strong>
-                        {item.status === "yes"
-                          ? "✓ Yes"
-                          : item.status === "partial"
-                            ? "◐ Partial"
-                            : "✗ No"}
-                      </strong>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-            {gaps.length > 0 && (
-              <div style={{ marginBottom: "20px", pageBreakInside: "avoid" }}>
-                <h2
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    marginBottom: "10px",
-                  }}
-                >
-                  Priority Gap Areas
-                </h2>
-                <ol style={{ marginLeft: "20px" }}>
-                  {gaps.map((gap, idx) => (
-                    <li key={gap.category} style={{ marginBottom: "5px" }}>
-                      {gap.category} ({gap.count} items)
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Hidden report removed */}
       </div>
     </div>
   );

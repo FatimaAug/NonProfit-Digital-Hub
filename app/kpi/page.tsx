@@ -97,7 +97,19 @@ export default function KPIDashboardPage() {
       margin: 10,
       filename: `kpi-report-${new Date().toISOString().split("T")[0]}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
+      html2canvas: {
+        scale: 2,
+        onclone: (clonedDoc: Document) => {
+          try {
+            const nodes = clonedDoc.querySelectorAll(
+              'link[rel="stylesheet"], style',
+            );
+            nodes.forEach((n) => n.remove());
+          } catch (e) {
+            // ignore
+          }
+        },
+      },
       jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
     };
 
