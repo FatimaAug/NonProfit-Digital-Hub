@@ -32,6 +32,12 @@ export default function AuditPage() {
     });
   };
 
+  const getItemScoreValue = (item: (typeof state.audit.items)[number]) => {
+    if (item.status === "yes") return item.weight;
+    if (item.status === "partial") return item.weight * 0.5;
+    return 0;
+  };
+
   const groupedItems = state.audit.items.reduce(
     (acc, item) => {
       if (!acc[item.category]) {
@@ -153,35 +159,51 @@ export default function AuditPage() {
                       <CardDescription>
                         {items.filter((i) => i.status === "yes").length} of{" "}
                         {items.length} items verified
+                        {items.filter((i) => i.status === "partial").length >
+                          0 && (
+                          <>
+                            {" "}
+                            ·{" "}
+                            {
+                              items.filter((i) => i.status === "partial").length
+                            }{" "}
+                            partial
+                          </>
+                        )}
                       </CardDescription>
+                      <div className="mt-3">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full md:w-auto"
+                        >
+                          Click below to select Yes, Partial, or No
+                        </Button>
+                      </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div
-                        className={`w-12 h-12 rounded-lg flex items-center justify-center font-bold ${getScoreBgColor(
-                          Math.round(
-                            (items.filter((i) => i.status === "yes").length /
-                              items.length) *
-                              100,
-                          ),
-                        )}`}
-                      >
-                        <span
-                          className={getScoreColor(
-                            Math.round(
-                              (items.filter((i) => i.status === "yes").length /
-                                items.length) *
-                                100,
-                            ),
-                          )}
-                        >
-                          {Math.round(
-                            (items.filter((i) => i.status === "yes").length /
-                              items.length) *
-                              100,
-                          )}
-                          %
-                        </span>
-                      </div>
+                      {(() => {
+                        const categoryScore = Math.round(
+                          (items.reduce(
+                            (sum, item) => sum + getItemScoreValue(item),
+                            0,
+                          ) /
+                            items.reduce((sum, item) => sum + item.weight, 0)) *
+                            100,
+                        );
+
+                        return (
+                          <div
+                            className={`w-12 h-12 rounded-lg flex items-center justify-center font-bold ${getScoreBgColor(
+                              categoryScore,
+                            )}`}
+                          >
+                            <span className={getScoreColor(categoryScore)}>
+                              {categoryScore}%
+                            </span>
+                          </div>
+                        );
+                      })()}
                     </div>
                   </div>
                 </CardHeader>
