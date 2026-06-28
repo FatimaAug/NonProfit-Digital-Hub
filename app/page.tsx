@@ -8,7 +8,6 @@ import {
   Users,
   BookOpen,
   Brain,
-  BarChart3,
   Lightbulb,
   Edit2,
 } from "lucide-react";
@@ -80,13 +79,6 @@ export default function Dashboard() {
       title: "Story Builder",
       description: "Craft compelling impact stories",
       color: "bg-pink-100 text-pink-600 dark:bg-pink-900/20 dark:text-pink-400",
-    },
-    {
-      href: "/kpi",
-      icon: BarChart3,
-      title: "KPI Dashboard",
-      description: "Track communication performance",
-      color: "bg-teal-100 text-teal-600 dark:bg-teal-900/20 dark:text-teal-400",
     },
     {
       href: "/recommendations",
@@ -313,18 +305,6 @@ export default function Dashboard() {
                   <p className="text-sm text-muted-foreground">
                     Share compelling narratives that demonstrate your
                     organization&apos;s impact
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-4">
-                <span className="shrink-0 w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center font-bold text-sm">
-                  5
-                </span>
-                <div>
-                  <p className="font-medium text-foreground">Track Your KPIs</p>
-                  <p className="text-sm text-muted-foreground">
-                    Measure communication performance and adjust your strategy
-                    based on data
                   </p>
                 </div>
               </li>

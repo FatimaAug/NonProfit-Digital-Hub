@@ -152,7 +152,7 @@ export default function SettingsPage() {
                   onClick={(e) => {
                     e.preventDefault();
                     alert(
-                      "Feature Guide:\n\n• Dashboard: Overview of your communication health\n• Audit: Assess current practices\n• Audience: Define supporter personas\n• Calendar: Plan content schedule\n• Templates: Pre-built message templates\n• Story Builder: Create impact narratives\n• KPI Dashboard: Track performance metrics\n• Recommendations: Get actionable next steps",
+                      "Feature Guide:\n\n• Dashboard: Overview of your communication health\n• Audit: Assess current practices\n• Audience: Define supporter personas\n• Calendar: Plan content schedule\n• Templates: Pre-built message templates\n• Story Builder: Create impact narratives\n• Recommendations: Get actionable next steps",
                     );
                   }}
                 >
@@ -166,7 +166,7 @@ export default function SettingsPage() {
                   onClick={(e) => {
                     e.preventDefault();
                     alert(
-                      "Best Practices:\n\n1. Start with the Audit to identify gaps\n2. Create 3-5 audience personas\n3. Schedule content 2-4 weeks in advance\n4. Post consistently (3+ times per week)\n5. Share impact stories monthly\n6. Track KPIs and measure progress\n7. Adjust strategy based on data",
+                      "Best Practices:\n\n1. Start with the Audit to identify gaps\n2. Create 3-5 audience personas\n3. Schedule content 2-4 weeks in advance\n4. Post consistently (3+ times per week)\n5. Share impact stories monthly\n6. Adjust strategy based on data",
                     );
                   }}
                 >

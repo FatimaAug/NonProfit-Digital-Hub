@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  BarChart3,
   Brain,
   Calendar,
   FileText,
@@ -26,7 +25,6 @@ export function Sidebar() {
     { href: "/calendar", icon: Calendar, label: "Calendar" },
     { href: "/templates", icon: BookOpen, label: "Templates" },
     { href: "/impact-story", icon: Brain, label: "Story Builder" },
-    { href: "/kpi", icon: BarChart3, label: "KPI Dashboard" },
     { href: "/recommendations", icon: Lightbulb, label: "Recommendations" },
   ];
 
