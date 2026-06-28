@@ -182,56 +182,6 @@ export default function RecommendationsPage() {
           </div>
         </div>
 
-        {/* Success Metrics */}
-        <Card>
-          <CardHeader>
-            <CardTitle>How to Measure Success</CardTitle>
-            <CardDescription>
-              Focus on these metrics to track improvement
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <p className="font-semibold text-foreground mb-2">Engagement Metrics</p>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Follower growth rate</li>
-                  <li>• Post engagement rate (likes, comments, shares)</li>
-                  <li>• Email open rate</li>
-                  <li>• Website click-through rate</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-foreground mb-2">Impact Metrics</p>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Donations received</li>
-                  <li>• Volunteer signups</li>
-                  <li>• Event attendance</li>
-                  <li>• Newsletter subscriptions</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-foreground mb-2">Strategy Metrics</p>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Content calendar completion</li>
-                  <li>• Posting frequency</li>
-                  <li>• Message consistency</li>
-                  <li>• Brand sentiment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-foreground mb-2">Best Practices</p>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Post 3+ times per week</li>
-                  <li>• Share monthly impact stories</li>
-                  <li>• Maintain brand consistency</li>
-                  <li>• Segment audience targeting</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Pro Tips */}
         <Card>
           <CardHeader>
@@ -252,9 +202,9 @@ export default function RecommendationsPage() {
               </p>
             </div>
             <div>
-              <p className="font-medium text-foreground">Measure Everything</p>
+              <p className="font-medium text-foreground">Review and Adjust</p>
               <p className="text-sm text-muted-foreground">
-                Use the KPI Dashboard to track progress. Data-driven decisions lead to better results.
+                Revisit your plan regularly and refine your approach as your needs evolve.
               </p>
             </div>
             <div>

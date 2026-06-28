@@ -228,7 +228,6 @@ export function generateRecommendations(
       category: "Content Strategy",
       actionItems: [
         "Map out a content mix for the next 4 weeks",
-        "Include at least one story or testimonial each week",
         "Experiment with visuals, videos, and carousel posts",
       ],
     },
@@ -249,7 +248,7 @@ export function generateRecommendations(
       id: "kpi-tracking",
       title: "Track and Review KPIs Regularly",
       description:
-        "Regular KPI reviews help you adjust strategy faster. Focus on engagement, donations, volunteer signups, and email performance each month.",
+        "Regular KPI reviews help you adjust strategy faster.",
       priority: "medium",
       category: "Performance",
       actionItems: [
